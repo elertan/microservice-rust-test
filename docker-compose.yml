@@ -6,7 +6,17 @@ services:
       context: .
       dockerfile: ./user_service/Dockerfile
     ports:
-      - 8080:8080
+      - 8080:80
     volumes:
       - "./domain/src/:/usr/local/domain/src/"
       - "./user_service/src/:/usr/local/app/src/"
+
+  logging_service:
+    build:
+      context: .
+      dockerfile: ./logging_service/Dockerfile
+    ports:
+      - 8081:80
+    volumes:
+      - "./domain/src/:/usr/local/domain/src/"
+      - "./logging_service/src/:/usr/local/app/src/"

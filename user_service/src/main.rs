@@ -1,7 +1,5 @@
-use actix_web::{web, App, HttpServer, Responder};
+use actix_web::{App, HttpServer};
 use serde_derive::Serialize;
-
-use domain::core::api::api_result::ApiResult;
 
 mod api;
 
@@ -13,7 +11,7 @@ struct User {
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| App::new().service(api::generate_web_scope()))
-        .bind("0.0.0.0:8080")?
+        .bind("0.0.0.0:80")?
         .run()
         .await
 }
