@@ -1,4 +1,5 @@
 use actix_web::{web, Responder, Scope};
+use serde_derive::Deserialize;
 
 use domain::core::api::api_result::ApiResult;
 
@@ -10,9 +11,15 @@ pub fn generate_web_scope() -> Scope {
         .route("/logout", web::post().to(logout))
 }
 
-async fn login() -> impl Responder {
+#[derive(Deserialize)]
+struct LoginParams {
+    pub email: String,
+    pub password: String,
+}
+
+async fn login(params: web::Json<LoginParams>) -> impl Responder {
     let api_result = ApiResult::success(User {
-        name: "Dennis!".to_string(),
+        name: params.email.clone(),
     });
     web::Json(api_result)
 }
