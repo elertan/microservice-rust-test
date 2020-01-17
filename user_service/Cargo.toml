@@ -13,3 +13,7 @@ actix-rt = "1.0"
 serde = "1.0.104"
 serde_json = "1.0.44"
 serde_derive = "1.0.104"
+
+[[bin]]
+name = "user_service"
+path = "src/main.rs"

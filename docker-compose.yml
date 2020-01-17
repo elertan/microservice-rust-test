@@ -1,0 +1,9 @@
+version: '3.5'
+
+services:
+  user_service:
+    build:
+      context: .
+      dockerfile: ./user_service/Dockerfile
+    ports:
+      - 8080:8080
