@@ -16,6 +16,5 @@ WORKDIR /usr/local/app
 COPY ./user_service/Cargo.* /usr/local/app/
 RUN mkdir src && echo "fn main() {}" > src/main.rs && cargo build
 COPY ./user_service/ /usr/local/app
-RUN cargo build
 
 CMD cargo watch -x run

@@ -14,6 +14,7 @@ serde = "1.0.104"
 serde_json = "1.0.44"
 serde_derive = "1.0.104"
 chrono = { version = "0.4.10", features = ["serde"] }
+failure = "0.1.6"
 
 [[bin]]
 name = "logging_service"

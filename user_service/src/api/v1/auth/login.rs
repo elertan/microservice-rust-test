@@ -12,8 +12,7 @@ pub struct Params {
 }
 
 pub async fn handler(params: web::Json<Params>) -> impl Responder {
-    let api_result = ApiResult::success(User {
+    ApiResult::success(User {
         name: params.email.clone(),
-    });
-    web::Json(api_result)
+    })
 }
