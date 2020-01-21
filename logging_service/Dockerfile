@@ -1,6 +1,7 @@
 FROM rust:1.40
 
 RUN cargo install cargo-watch
+RUN cargo install diesel_cli --no-default-features --features postgres
 
 # Domain library
 #WORKDIR /usr/local/domain

@@ -15,6 +15,8 @@ serde_json = "1.0.44"
 serde_derive = "1.0.104"
 chrono = { version = "0.4.10", features = ["serde"] }
 failure = "0.1.6"
+diesel = { version = "1.4.3", features = ["postgres", "chrono"] }
+diesel-derive-enum = { version = "0.4.4", features = ["postgres"] }
 
 [[bin]]
 name = "logging_service"

@@ -2,6 +2,8 @@ version: '3.5'
 
 services:
   user_service:
+    depends_on:
+      - user_service_db
     build:
       context: .
       dockerfile: ./user_service/Dockerfile
@@ -10,8 +12,20 @@ services:
     volumes:
       - "./domain/src/:/usr/local/domain/src/"
       - "./user_service/src/:/usr/local/app/src/"
+      - "./user_service/migrations/:/usr/local/app/migrations/"
+
+  user_service_db:
+    image: postgres:12.1-alpine
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "c166e6f1ca68144af84e89db651195703"
+      POSTGRES_DB: "db"
+    ports:
+      - 5432:5432
 
   logging_service:
+    depends_on:
+      - logging_service_db
     build:
       context: .
       dockerfile: ./logging_service/Dockerfile
@@ -20,3 +34,15 @@ services:
     volumes:
       - "./domain/src/:/usr/local/domain/src/"
       - "./logging_service/src/:/usr/local/app/src/"
+      - "./logging_service/migrations/:/usr/local/app/migrations/"
+    environment:
+      DATABASE_URL: "postgres://root:8a6b5e54a0f647f28ef504da7ee9ca4f@logging_service_db/db"
+
+  logging_service_db:
+    image: postgres:12.1-alpine
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "8a6b5e54a0f647f28ef504da7ee9ca4f"
+      POSTGRES_DB: "db"
+    ports:
+      - 5433:5432

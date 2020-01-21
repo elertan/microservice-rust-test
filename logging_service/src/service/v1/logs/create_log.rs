@@ -10,8 +10,11 @@ pub struct Data {
 pub async fn handler(data: Data) -> Result<Log, failure::Error> {
     // Save to database
     Ok(Log {
+        id: 1,
         level: data.level,
         message: data.message,
-        created_at: Utc::now(),
+        json_data: None,
+        created_at: Utc::now().naive_utc(),
+        updated_at: None,
     })
 }
