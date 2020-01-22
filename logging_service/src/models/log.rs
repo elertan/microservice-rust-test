@@ -30,7 +30,7 @@ pub struct Log {
 #[derive(Debug, Insertable, PartialEq)]
 #[table_name = "log"]
 pub struct InsertableLog<'a> {
-    pub level: LogLevel,
+    pub level: &'a LogLevel,
     pub message: &'a str,
     pub json_data: Option<&'a str>,
     pub created_at: NaiveDateTime,

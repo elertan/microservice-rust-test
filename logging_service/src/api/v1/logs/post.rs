@@ -1,11 +1,10 @@
 use actix_web::{web, Responder};
-use chrono::prelude::*;
 use serde_derive::Deserialize;
 
 use domain::core::api::api_error::ApiError;
 use domain::core::api::api_result::ApiResult;
 
-use crate::models::log::{InsertableLog, Log, LogLevel};
+use crate::models::log::LogLevel;
 use crate::service::v1::logs::create_log;
 use crate::State;
 
@@ -23,12 +22,10 @@ pub async fn handler(params: web::Json<Params>, state: web::Data<State>) -> impl
         None => None,
     };
     let result = create_log::handler(
-        InsertableLog {
-            message: params.message.as_str(),
-            level: params.level.clone(),
+        create_log::Data {
+            message: &params.message,
+            level: &params.level,
             json_data,
-            created_at: Utc::now().naive_utc(),
-            updated_at: None,
         },
         &state.db,
     )

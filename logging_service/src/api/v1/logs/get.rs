@@ -10,6 +10,11 @@ pub async fn handler(data: web::Data<State>) -> impl Responder {
     use crate::schema::log::dsl::*;
 
     let db = &data.db;
-    let logs = log.limit(50).load::<Log>(db).expect("fail");
+    let logs = log
+        .limit(50)
+        .order(created_at.desc())
+        .load::<Log>(db)
+        .expect("fail");
+
     ApiResult::success(logs)
 }
