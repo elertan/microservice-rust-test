@@ -4,7 +4,7 @@ use serde_derive::*;
 
 use crate::schema::log;
 
-#[derive(Debug, Serialize, Deserialize, DbEnum, PartialEq)]
+#[derive(Debug, Serialize, Deserialize, DbEnum, PartialEq, Clone)]
 #[serde(rename_all = "camelCase")]
 #[DieselType = "Log_level"]
 pub enum LogLevel {
@@ -23,6 +23,16 @@ pub struct Log {
     pub level: LogLevel,
     pub message: String,
     pub json_data: Option<String>,
+    pub created_at: NaiveDateTime,
+    pub updated_at: Option<NaiveDateTime>,
+}
+
+#[derive(Debug, Insertable, PartialEq)]
+#[table_name = "log"]
+pub struct InsertableLog<'a> {
+    pub level: LogLevel,
+    pub message: &'a str,
+    pub json_data: Option<&'a str>,
     pub created_at: NaiveDateTime,
     pub updated_at: Option<NaiveDateTime>,
 }

@@ -1,20 +1,13 @@
-use chrono::prelude::*;
+use diesel::{PgConnection, RunQueryDsl};
 
-use crate::models::log::{Log, LogLevel};
+use crate::models::log::{InsertableLog, Log};
+use crate::schema::log;
 
-pub struct Data {
-    pub level: LogLevel,
-    pub message: String,
-}
+pub async fn handler(data: InsertableLog<'_>, db: &PgConnection) -> Result<Log, failure::Error> {
+    let log = diesel::insert_into(log::table)
+        .values(&data)
+        .get_result(db)
+        .expect("Log insert failed");
 
-pub async fn handler(data: Data) -> Result<Log, failure::Error> {
-    // Save to database
-    Ok(Log {
-        id: 1,
-        level: data.level,
-        message: data.message,
-        json_data: None,
-        created_at: Utc::now().naive_utc(),
-        updated_at: None,
-    })
+    Ok(log)
 }
